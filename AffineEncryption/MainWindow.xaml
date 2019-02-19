@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button x:Name="btnSelectFile" Content="Select File" HorizontalAlignment="Left" Height="31" Margin="26,7,0,0" VerticalAlignment="Top" Width="120" Click="BtnSelectFile_Click"/>
+        <Button x:Name="btnEncrypt" Content="Encrypt" HorizontalAlignment="Left" Height="31" Margin="151,7,0,0" VerticalAlignment="Top" Width="120" Click="BtnEncrypt_Click"/>
+        <Button x:Name="btnDecrypt" Content="Decrypt" HorizontalAlignment="Left" Height="31" Margin="276,7,0,0" VerticalAlignment="Top" Width="120" Click="BtnDecrypt_Click"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="347" Margin="26,48,0,0" VerticalAlignment="Top" Width="737">
+            <Label x:Name="lblFileText" Content=""/>
+        </Border>
+        <Button x:Name="btnAttack" Content="Attack" HorizontalAlignment="Left" Height="31" Margin="401,7,0,0" VerticalAlignment="Top" Width="120" Click="BtnAttack_Click"/>
+
     </Grid>
 </Window>
