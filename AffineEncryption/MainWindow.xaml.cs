@@ -66,7 +66,7 @@ namespace AffineEncryption
             {
                 if (this.fileText[i] != ' ')
                 {
-                    cipher = cipher + (char)((((a * (this.fileText[i] - 0)) + b) % 256) + 0);
+                    cipher = cipher + (char)((a * this.fileText[i] + b) % 256);
                 } else cipher += this.fileText[i];
             }
 
@@ -103,7 +103,7 @@ namespace AffineEncryption
             {
                 if (this.fileText[i] != ' ')
                 {
-                    this.resultText = this.resultText + (char)((((aInverse * (this.fileText[i] + 0) - (b*aInverse)) % 256)) + 0);
+                    this.resultText = this.resultText + (char)(((aInverse * this.fileText[i] - b * aInverse) % 256) + 0);
                 } else {
                     this.resultText += this.fileText[i];
                 }
@@ -140,7 +140,7 @@ namespace AffineEncryption
             {
                 if (this.fileText[i] != ' ')
                 {
-                    this.resultText = this.resultText + (char)((((aInverse * ((this.fileText[i] + 0)) - _b*aInverse) % 256)) + 0);
+                    this.resultText = this.resultText + (char)(((aInverse * this.fileText[i] - _b*aInverse) % 256) + 0);
                 }
                 else
                 {
