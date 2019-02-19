@@ -157,7 +157,7 @@ namespace AffineEncryption
         {
             for (int i = 0; i < 256; i++)
             {
-                if (i % 2 != 0 && i != 13)
+                if (i % 2 != 0 && i != 128)
                 {
                     for (int j = 0; j < 256; j++)
                     {
