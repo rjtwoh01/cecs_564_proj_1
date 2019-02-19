@@ -24,6 +24,7 @@ namespace AffineEncryption
         private string resultText;
         const int a = 17;
         const int b = 20;
+        private List<String> allPossibilities;
 
         public MainWindow()
         {
@@ -31,6 +32,7 @@ namespace AffineEncryption
             fileName = "";
             fileText = "";
             resultText = "";
+            allPossibilities = new List<String>();
         }
 
         private void readText()
@@ -101,7 +103,7 @@ namespace AffineEncryption
             {
                 if (this.fileText[i] != ' ')
                 {
-                    this.resultText = this.resultText + (char)(((aInverse * ((this.fileText[i] + 0 - b)) % 256)) + 0);
+                    this.resultText = this.resultText + (char)((((aInverse * (this.fileText[i] + 0) - (b*aInverse)) % 256)) + 0);
                 } else {
                     this.resultText += this.fileText[i];
                 }
@@ -120,6 +122,63 @@ namespace AffineEncryption
             }
         }
 
+        private void decrypt(int _a, int _b)
+        {
+            this.resultText = "";
+            int aInverse = 0;
+            int flag = 0;
+
+            for (int i = 0; i < 255; i++)
+            {
+                flag = (_a * i) % 256;
+                if (flag == 1)
+                {
+                    aInverse = i;
+                }
+            }
+            for (int i = 0; i < this.fileText.Length; i++)
+            {
+                if (this.fileText[i] != ' ')
+                {
+                    this.resultText = this.resultText + (char)((((aInverse * ((this.fileText[i] + 0)) - _b*aInverse) % 256)) + 0);
+                }
+                else
+                {
+                    this.resultText += this.fileText[i];
+                }
+            }
+
+            string result = "(" + _a + "," + _b + "): " + this.resultText;
+            this.allPossibilities.Add(result);
+            this.lblFileText.Content = this.resultText.ToString();
+        }
+
+        public void attack()
+        {
+            for (int i = 0; i < 256; i++)
+            {
+                if (i % 2 != 0 && i != 13)
+                {
+                    for (int j = 0; j < 256; j++)
+                    {
+                        decrypt(i, j);
+                    }
+                }
+            }
+
+            string fileDirectory = System.IO.Path.GetDirectoryName(this.fileName);
+            this.lblFileText.Content = this.resultText.ToString();
+
+            using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(fileDirectory, "attackOutput.txt")))
+            {
+                foreach (string possibility in this.allPossibilities)
+                {
+                    outputFile.WriteLine(""+possibility);
+                    outputFile.WriteLine("------------------------------------");
+                }
+            }
+        }
+
         private void BtnEncrypt_Click(object sender, RoutedEventArgs e)
         {
             encrypt();
@@ -132,7 +191,7 @@ namespace AffineEncryption
 
         private void BtnAttack_Click(object sender, RoutedEventArgs e)
         {
-
+            attack();
         }
     }
 }
